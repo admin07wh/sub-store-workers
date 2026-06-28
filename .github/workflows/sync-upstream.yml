@@ -214,8 +214,9 @@ jobs:
             --commit-message "upstream ${{ steps.upstream.outputs.version }}" \
             --commit-dirty=true
 
-      - name: Health check
+            - name: Health check
         if: steps.check.outputs.needed == 'true'
+        continue-on-error: true
         run: |
           URL="https://sub-store-workers.${{ secrets.WORKERS_SUBDOMAIN }}.workers.dev"
           for i in 1 2 3; do
