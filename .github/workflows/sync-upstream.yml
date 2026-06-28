@@ -147,7 +147,6 @@ jobs:
           echo "mb=$MB" >> $GITHUB_OUTPUT
           echo "gzip_kb=$GZIP_KB" >> $GITHUB_OUTPUT
           echo "worker.js raw: ${KB} KB (${MB} MB), gzipped: ${GZIP_KB} KB"
-          # Workers 付费上限 10 MiB（gzipped），免费 3 MiB（gzipped）
           HARD_LIMIT=$((10 * 1024 * 1024))
           if [ "$GZIP_BYTES" -gt "$HARD_LIMIT" ]; then
             echo "::error::Worker bundle gzipped size ${GZIP_KB} KB exceeds Cloudflare 10 MiB hard limit"
@@ -214,7 +213,7 @@ jobs:
             --commit-message "upstream ${{ steps.upstream.outputs.version }}" \
             --commit-dirty=true
 
-            - name: Health check
+      - name: Health check
         if: steps.check.outputs.needed == 'true'
         continue-on-error: true
         run: |
